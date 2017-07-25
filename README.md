@@ -20,8 +20,9 @@ To create the necessary databases, launch postgres, then psql, and run the follo
 ### Refactor
 
 * _Make endangered animals class inherit from our Animal class_
-* _
-
+* _Add timestamp to sightings_
+* _Add tests for our timestamps in our AnimalTest and SightingTest_
+* _Add constants to Animal class and set them as integer values for sorting later_
 
 ### License
 
