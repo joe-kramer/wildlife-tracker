@@ -5,6 +5,9 @@ import java.util.ArrayList;
 import spark.ModelAndView;
 import spark.template.velocity.VelocityTemplateEngine;
 import static spark.Spark.*;
+import java.text.DateFormat;
+import java.util.Date;
+import java.sql.Timestamp;
 
 public class App {
   public static void main(String[] args) {
@@ -14,7 +17,7 @@ public class App {
     get("/", (request, response) -> {
       Map<String, Object> model = new HashMap<String, Object>();
       model.put("animals", Animal.all());
-      model.put("endangeredAnimals", EndangeredAnimal.all());
+      model.put("endangeredAnimals", EndangeredAnimal.allEndangered());
       model.put("sightings", Sighting.all());
       model.put("template", "templates/index.vtl");
       return new ModelAndView(model, layout);
@@ -28,7 +31,7 @@ public class App {
       Sighting sighting = new Sighting(animalIdSelected, latLong, rangerName);
       sighting.save();
       model.put("sighting", sighting);
-      model.put("animals", EndangeredAnimal.all());
+      model.put("animals", EndangeredAnimal.allEndangered());
       String animal = EndangeredAnimal.find(animalIdSelected).getName();
       model.put("animal", animal);
       model.put("template", "templates/success.vtl");
@@ -53,7 +56,7 @@ public class App {
     get("/animal/new", (request, response) -> {
       Map<String, Object> model = new HashMap<String, Object>();
       model.put("animals", Animal.all());
-      model.put("endangeredAnimals", EndangeredAnimal.all());
+      model.put("endangeredAnimals", EndangeredAnimal.allEndangered());
       model.put("template", "templates/animal-form.vtl");
       return new ModelAndView(model, layout);
     }, new VelocityTemplateEngine());
@@ -68,13 +71,13 @@ public class App {
         EndangeredAnimal endangeredAnimal = new EndangeredAnimal(name, health, age);
         endangeredAnimal.save();
         model.put("animals", Animal.all());
-        model.put("endangeredAnimals", EndangeredAnimal.all());
+        model.put("endangeredAnimals", EndangeredAnimal.allEndangered());
       } else {
         String name = request.queryParams("name");
         Animal animal = new Animal(name);
         animal.save();
         model.put("animals", Animal.all());
-        model.put("endangeredAnimals", EndangeredAnimal.all());
+        model.put("endangeredAnimals", EndangeredAnimal.allEndangered());
       }
       response.redirect("/");
         return null;

@@ -4,10 +4,23 @@ import org.sql2o.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Arrays;
+import java.text.DateFormat;
+import java.util.Date;
+import java.sql.Timestamp;
 
 public class AnimalTest {
   @Rule
   public DatabaseRule database = new DatabaseRule();
+
+  @Test
+  public void getTime_getsTimeFromSighting() {
+    Animal testAnimal = new Animal("Deer");
+    testAnimal.save();
+    Sighting testSighting = new Sighting(testAnimal.getId(), "45.472428, -121.946466", "Ranger Avery");
+    testSighting.save();
+    Timestamp rightNow = new Timestamp(new Date().getTime());
+    assertEquals(rightNow.getDay(), testAnimal.getSightings().get(0).getTime().getDay());
+  }
 
   @Test
   public void animal_instantiatesCorrectly_false() {

@@ -8,7 +8,6 @@ public class Animal {
 
   public Animal(String name) {
     this.name = name;
-    this.id = id;
   }
 
   public String getName() {

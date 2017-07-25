@@ -6,11 +6,22 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.text.DateFormat;
 import java.util.Date;
+import java.sql.Timestamp;
 
 public class SightingTest {
 
   @Rule
   public DatabaseRule database = new DatabaseRule();
+
+  @Test
+  public void getTime_returnsRightTime() {
+    Animal testAnimal = new Animal("Deer");
+    testAnimal.save();
+    Sighting testSighting = new Sighting(testAnimal.getId(), "45.472428, -121.946466", "Ranger Avery");
+    testSighting.save();
+    Timestamp rightNow = new Timestamp(new Date().getTime());
+    assertEquals(rightNow.getDay(), Sighting.all().get(0).getTime().getDay());
+  }
 
   @Test
   public void sighting_instantiatesCorrectly_true() {
