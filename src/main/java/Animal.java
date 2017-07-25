@@ -6,6 +6,13 @@ public class Animal {
   public String name;
   public int id;
 
+  public static final int ILL = 1;
+  public static final int HEALTHY = 2;
+  public static final int OKAY = 3;
+  public static final int NEWBORN = 1;
+  public static final int YOUNG = 2;
+  public static final int ADULT = 3;
+
   public Animal(String name) {
     this.name = name;
   }
